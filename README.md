@@ -1,5 +1,7 @@
 # MyBookshelf
 
+🚧 **Work in progress.** Built with [Claude](https://claude.ai) and Claude Design.
+
 A realistic, interactive digital bookcase prototype built in React and rendered inside an iOS device frame. It visualizes a personal library with physically accurate millimeter dimensions (height, thickness, and width derived from real page counts), lifelike 3D spine lighting, wood-grain shelf themes, and a cinematic 3D book-opening transition into a full e-reader view.
 
 The whole thing is a **zero-build prototype** — no npm, no bundler, no compile step. React, ReactDOM, and Babel are loaded from a CDN, and `.jsx` files are transpiled live in the browser. Just serve the folder over HTTP and open `myBookshelf.html`.
