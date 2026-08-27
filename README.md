@@ -17,11 +17,10 @@ The whole thing is a **zero-build prototype** — no npm, no bundler, no compile
 
 ## What it does
 
-- **Shelf view** — a wooden bookcase (warm white / light oak / dark walnut themes) holding rows of book spines. Every spine's width and height is computed from that book's real-world dimensions, so a 1,276-page hardback (*The Count of Monte Cristo*) visibly dwarfs a slim paperback next to it.
-- **Tap a spine** — triggers a 4-phase cinematic animation: the book **rises** off the shelf, **turns to face** the reader and scales up, its cover **swings open**, then the view **crossfades** into a full-page reading interface — all rendered as a real 6-sided 3D CSS box (`preserve-3d`), not a flat sprite.
+- **Shelf view** — a wooden bookcase holding rows of book spines. Every spine's width and height is computed from that book's real-world dimensions, so a 1,276-page hardback (*The Count of Monte Cristo*) visibly dwarfs a slim paperback next to it.
+- **Tap a spine** — triggers a 4-phase cinematic animation: the book **rises** off the shelf, **turns to face** the reader and scales up, its cover **swings open**, then the view **crossfades** into a full-page reading interface — all rendered as a real 6-sided 3D CSS box, not a flat sprite.
 - **Reading view** — typography-focused page with a progress bar, "time left" estimate, and chapter heading, seeded from each book's page count and an excerpt.
 - **Discover tab** — horizontal genre carousels (Horror, Drama, Romance, Mystery, Science Fiction) of placeholder demo covers, plus a floating "Add new book" button.
-- **Profile tab** — placeholder screen ("Coming soon").
 - **Live Tweaks panel** — an in-app control panel for adjusting bookcase material, wood grain intensity, spine label density (title+author / title only / none), and animation speed, without touching code.
 
 ## Tech stack
@@ -30,7 +29,7 @@ The whole thing is a **zero-build prototype** — no npm, no bundler, no compile
 - Babel Standalone for in-browser JSX transpilation
 - Plain CSS-in-JS (inline styles) — no CSS framework
 - Google Fonts: *Spectral* and *EB Garamond*
-- No build tooling of any kind (no Vite, Webpack, npm scripts)
+- No build tooling of any kind
 
 ## Project structure
 
@@ -58,10 +57,10 @@ Scripts are loaded in a strict order in `myBookshelf.html` (`data.js → ios-fra
 
 ## Key ideas worth knowing
 
-- **Dimensional honesty**: `data.js` stores each book's real cover height (`heightMM`) and derives spine thickness (`thickMM`) from page count and binding (hardback vs. paperback) via `thick(pages, hard) = pages * 0.052 + (hard ? 7 : 2)` mm, clamped to a minimum of 8mm. Cover width defaults to `0.64 * heightMM` when not given. Everything scales from a single constant (`MB_PXMM` / `MB_SCALE`) so relative proportions stay physically plausible at any zoom level.
+- **Dimensional honesty**: `data.js` stores each book's real cover height and derives spine thickness from page count and binding (hardback vs. paperback), clamped to a minimum of 8mm. Everything scales from a single constant so relative proportions stay physically plausible at any zoom level.
 - **3D book box**: `Book3D` in `spine.jsx` builds a real 6-face cube (back cover, spine, fore-edge with page-texture gradient, top/bottom pages, hinged front cover) using `transformStyle: 'preserve-3d'`, driven by a single `open` angle (0° closed → -150° open) and an outer `transform` string for position/rotation/scale.
 - **Reader animation**: `Reader` in `reader.jsx` is a small phase state machine (`rise → face → open → read`, reversible via `closeCover → return`) that computes the exact on-screen origin of the clicked spine and animates the 3D book from that bounding box to stage-center and back, with a `speed` multiplier threading through every timeout and CSS transition.
-- **Tweaks protocol**: `useTweaks` posts `postMessage` events to a parent host (an external "edit mode" tool) on every change, so the prototype can be live-tuned from outside the iframe. Defaults are wrapped in `/*EDITMODE-BEGIN*/ ... /*EDITMODE-END*/` markers so that external tool can safely rewrite them.
+- **Tweaks protocol**: `useTweaks` posts `postMessage` events to a parent host (an external "edit mode" tool) on every change, so the prototype can be live-tuned from outside the iframe.
 
 ## Running locally
 
@@ -83,7 +82,6 @@ npx serve .
 
 ## Known gaps / in-progress bits
 
-- `MB_STACKS` (decorative horizontal book stacks defined in `app.jsx`) is built but not currently wired into the `<Bookshelf>` call, so it doesn't render.
 - Each shelf in `data.js` holds 12–13 books, but only the first 8 per shelf are shown (`app.jsx`'s `.slice(0, 8)`) to fit the 402px-wide device frame — the rest of the catalogue exists in data but isn't currently displayed.
 - Discover tab covers are decorative placeholders (no `onClick`, no `pages`/`excerpt` data) and aren't wired to the Reader.
 - Profile tab is a static "Coming soon" placeholder.
