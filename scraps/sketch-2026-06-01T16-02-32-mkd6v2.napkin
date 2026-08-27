@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "created": "2026-06-01T16:02:32.666Z",
+  "modified": "2026-06-01T16:12:12.216Z",
+  "objects": [
+    {
+      "id": "5p1mg6u1x",
+      "type": "rect",
+      "x": 311,
+      "y": 90,
+      "width": 230,
+      "height": 460,
+      "data": {
+        "fill": null,
+        "stroke": "#8B2500",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "hzvhm12ar",
+      "type": "stroke",
+      "x": 0,
+      "y": 0,
+      "data": {
+        "points": [
+          {
+            "x": 310,
+            "y": 245
+          },
+          {
+            "x": 540.0021739027699,
+            "y": 245
+          }
+        ],
+        "color": "#8B2500",
+        "size": 2
+      }
+    },
+    {
+      "id": "zjz73t1na",
+      "type": "stroke",
+      "x": 0,
+      "y": 0,
+      "data": {
+        "points": [
+          {
+            "x": 310,
+            "y": 405
+          },
+          {
+            "x": 541.0021644920238,
+            "y": 405
+          }
+        ],
+        "color": "#8B2500",
+        "size": 2
+      }
+    },
+    {
+      "id": "m9kc8vdic",
+      "type": "rect",
+      "x": 298,
+      "y": 71,
+      "width": 256,
+      "height": 559,
+      "data": {
+        "fill": null,
+        "stroke": "#000000",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "l7d6fd3g5",
+      "type": "stroke",
+      "x": 0,
+      "y": 0,
+      "data": {
+        "points": [
+          {
+            "x": 541,
+            "y": 556
+          },
+          {
+            "x": 312.99122823891184,
+            "y": 556
+          }
+        ],
+        "color": "#000000",
+        "size": 2
+      }
+    },
+    {
+      "id": "at7gadl9b",
+      "type": "stroke",
+      "x": 0,
+      "y": 0,
+      "data": {
+        "points": [
+          {
+            "x": 373,
+            "y": 556
+          },
+          {
+            "x": 373,
+            "y": 629
+          }
+        ],
+        "color": "#000000",
+        "size": 2
+      }
+    },
+    {
+      "id": "39728g5y5",
+      "type": "stroke",
+      "x": 0,
+      "y": 0,
+      "data": {
+        "points": [
+          {
+            "x": 486,
+            "y": 559
+          },
+          {
+            "x": 486,
+            "y": 629.1141925718324
+          }
+        ],
+        "color": "#000000",
+        "size": 2
+      }
+    }
+  ]
+}

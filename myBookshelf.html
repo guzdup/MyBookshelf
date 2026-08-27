@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>myBookshelf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:wght@400;500;600&display=swap" rel="stylesheet" />
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="#c2b59b"/>
+    <g transform="translate(28,24)">
+      <rect x="0" y="0" width="9" height="52" fill="#2f5d3a"/>
+      <rect x="10" y="6" width="7" height="46" fill="#b13a2f"/>
+      <rect x="18" y="2" width="8" height="50" fill="#13243f"/>
+      <rect x="27" y="8" width="6" height="44" fill="#e1b94a"/>
+      <rect x="34" y="0" width="9" height="52" fill="#6a2030"/>
+    </g>
+    <rect x="22" y="78" width="56" height="5" fill="#efe9db"/>
+  </svg>
+</template>
+<style>
+  html, body { margin: 0; height: 100%; background: #e7e4dd; }
+  body {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 24px; box-sizing: border-box;
+    background:
+      radial-gradient(120% 90% at 50% 0%, #efece6, #e0ddd4 60%, #d6d2c7);
+    -webkit-font-smoothing: antialiased;
+  }
+  #root { transform-origin: center center; }
+  * { -webkit-tap-highlight-color: transparent; }
+  .mb-shelf-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+  .mb-shelf-scroll::-webkit-scrollbar { width: 0; height: 0; display: none; }
+  .mb-genre-strip { scrollbar-width: none; -ms-overflow-style: none; }
+  .mb-genre-strip::-webkit-scrollbar { width: 0; height: 0; display: none; }
+</style>
+</head>
+<body style="font-size: 18px">
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="data.js"></script>
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="spine.jsx"></script>
+<script type="text/babel" src="shelf.jsx"></script>
+<script type="text/babel" src="discover.jsx"></script>
+<script type="text/babel" src="reader.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+  const DEVICE_W = 402, DEVICE_H = 874;
+  function Root() {
+    const [scale, setScale] = React.useState(1);
+    React.useLayoutEffect(() => {
+      const fit = () => {
+        const s = Math.min(
+          (window.innerWidth - 48) / DEVICE_W,
+          (window.innerHeight - 48) / DEVICE_H,
+          1.1
+        );
+        setScale(s);
+      };
+      fit();
+      window.addEventListener('resize', fit);
+      return () => window.removeEventListener('resize', fit);
+    }, []);
+    return (
+      <div style={{ transform: `scale(${scale})`, transformOrigin: 'center center' }}>
+        <IOSDevice width={DEVICE_W} height={DEVICE_H}>
+          <App />
+        </IOSDevice>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<Root />);
+</script>
+</body>
+</html>
