@@ -70,16 +70,16 @@ Babel Standalone fetches `.jsx` files via `fetch`/XHR, so the project must be se
 ```bash
 # Option 1: Python 3
 python3 -m http.server 8000
+```
 
+Then open `http://localhost:8000/myBookshelf.html`.
+
+```bash
 # Option 2: Node
 npx serve .
 ```
 
-Then open:
-
-```
-http://localhost:8000/myBookshelf.html
-```
+`serve` doesn't use port 8000 — it defaults to `3000` (or the next free port, printed in its own terminal output), so open `myBookshelf.html` at whatever address it prints, e.g. `http://localhost:3000/myBookshelf.html`.
 
 ## Known gaps / in-progress bits
 
