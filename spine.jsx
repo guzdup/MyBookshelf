@@ -190,7 +190,7 @@ function Book3D({ book, scale, transform, open = 0, faceFont }) {
         transform: `translateZ(${t / 2 - 1}px)`, background: '#f6f0e2', borderRadius: '1px 3px 3px 1px',
         padding: '8% 8% 8% 6%', boxSizing: 'border-box', overflow: 'hidden' })}>
         <div style={{ fontFamily: faceFont, fontSize: Math.max(5, w * 0.05), lineHeight: 1.5,
-          color: '#3a3024', textAlign: 'justify' }}>{book.excerpt}</div>
+          color: '#3a3024', textAlign: 'justify' }}>{}</div>
       </div>
 
       {/* FRONT COVER — hinged at its left edge */}
