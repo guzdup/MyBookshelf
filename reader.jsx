@@ -26,8 +26,8 @@ function Reader({ book, origin, stage, scale, faceFont, speed = 1, density, onCl
   const close = () => {
     timers.current.forEach(clearTimeout); timers.current = [];
     setPhase('closeCover');
-    after(520, () => setPhase('return'));
-    after(520 + 560, () => onClosed && onClosed());
+    after(780, () => setPhase('return'));
+    after(780 + 840, () => onClosed && onClosed());
   };
 
   // per-phase look of the 3D book
@@ -42,9 +42,9 @@ function Reader({ book, origin, stage, scale, faceFont, speed = 1, density, onCl
       transform = `translate(${w * S * 0.12}px, ${-lift}px) rotateY(-20deg) scale(${S * 0.82})`;
       open = -150; dur = 600; bookOpacity = phase === 'read' ? 0 : 1; break;
     case 'closeCover':
-      transform = `translate(0px, ${-lift}px) rotateY(0deg) scale(${S})`; open = 0; dur = 520; break;
+      transform = `translate(0px, ${-lift}px) rotateY(0deg) scale(${S})`; open = 0; dur = 780; break;
     case 'return':
-      transform = `translate(${dx}px, ${dy}px) rotateY(90deg) scale(1)`; open = 0; dur = 560; break;
+      transform = `translate(${dx}px, ${dy}px) rotateY(90deg) scale(1)`; open = 0; dur = 840; break;
     default: transform = '';
   }
 
