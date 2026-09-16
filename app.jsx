@@ -88,6 +88,13 @@ function MB_Header({ faceFont, title, eyebrow }) {
 
 }
 
+function MB_Timer({ faceFont }){
+  return (
+    <div style={{ fontFamily: faceFont, fontSize: 12, color: '#485d6f', fontWeight: 500 }}></div>
+
+  )
+}
+
 function MB_Placeholder({ title, line, faceFont }) {
   return (
     <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
@@ -104,7 +111,14 @@ function MB_Placeholder({ title, line, faceFont }) {
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [tab, setTab] = React.useState('shelf');
-  const [userName, setUserName] = React.useState('Mara');
+  const [userName, setUserName] = React.useState(() => {
+    try { return localStorage.getItem('mb_userName') || 'Guz'; }
+    catch (e) { return 'Guz'; }
+  });
+
+  React.useEffect(() => {
+    try { localStorage.setItem('mb_userName', userName); } catch (e) { /* storage unavailable */ }
+  }, [userName]);
   const [selected, setSelected] = React.useState(null);
   const [origin, setOrigin] = React.useState(null);
   const stageRef = React.useRef(null);

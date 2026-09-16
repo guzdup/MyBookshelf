@@ -19,6 +19,8 @@ function Profile({ faceFont, userName, setUserName }) {
           This name will show on My Shelf.
         </div>
       </div>
+
+      <MB_Timer faceFont={faceFont}/>
     </div>);
 
 }
