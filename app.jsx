@@ -104,6 +104,7 @@ function MB_Placeholder({ title, line, faceFont }) {
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [tab, setTab] = React.useState('shelf');
+  const [userName, setUserName] = React.useState('Mara');
   const [selected, setSelected] = React.useState(null);
   const [origin, setOrigin] = React.useState(null);
   const stageRef = React.useRef(null);
@@ -153,8 +154,8 @@ function App() {
           </React.Fragment>
         }
         {tab === 'discover' && <Discover faceFont={faceFont} />}
-        {tab === 'profile' && <MB_Placeholder faceFont={faceFont} title="Profile"
-        line="Your reading streak, finished volumes and yearly goal will live here." />}
+        
+        {tab === 'profile' && <Profile faceFont={faceFont} userName={userName} setUserName={setUserName} />}
 
         {/* cinematic reader */}
         {selected && origin &&
@@ -167,8 +168,9 @@ function App() {
       {tab !== 'profile' &&
         <MB_Header faceFont={faceFont}
           title={tab === 'discover' ? 'Discover' : 'My Shelf'}
-          eyebrow={tab === 'discover' ? 'Curated for you' : 'Good evening, Mara'} />
+          eyebrow={tab === 'discover' ? 'Curated for you' : `Good evening, ${userName}`} />
       }
+
       <MB_TabBar tab={tab} setTab={setTab} faceFont={faceFont} />
 
       {/* ── Tweaks ── */}
