@@ -1,5 +1,7 @@
 // app.jsx — myBookshelf screen: wall + bookcase + header + tab bar + Tweaks. Exports App.
 
+import React from "react";
+
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "shelfTheme": "warmWhite",
   "grain": 1,
@@ -111,14 +113,25 @@ function MB_Placeholder({ title, line, faceFont }) {
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [tab, setTab] = React.useState('shelf');
+  
   const [userName, setUserName] = React.useState(() => {
     try { return localStorage.getItem('mb_userName') || 'Guz'; }
     catch (e) { return 'Guz'; }
   });
-
+  
   React.useEffect(() => {
     try { localStorage.setItem('mb_userName', userName); } catch (e) { /* storage unavailable */ }
   }, [userName]);
+  
+  const [readingGoal, setReadingGoal] = React.useState(() => {
+    try { return localStorage.getItem('mb_readingGoal') || '0';}
+    catch (e) { return '0';}
+  });
+  React.useEffect(() => {
+    try {localStorage.setItem('mb_readingGoal', readingGoal); } catch (e) { TODO }
+  }, [readingGoal]);
+
+
   const [selected, setSelected] = React.useState(null);
   const [origin, setOrigin] = React.useState(null);
   const stageRef = React.useRef(null);
