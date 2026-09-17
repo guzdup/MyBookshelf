@@ -1,6 +1,6 @@
 // app.jsx — myBookshelf screen: wall + bookcase + header + tab bar + Tweaks. Exports App.
 
-import React from "react";
+
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "shelfTheme": "warmWhite",
@@ -113,24 +113,30 @@ function MB_Placeholder({ title, line, faceFont }) {
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [tab, setTab] = React.useState('shelf');
-  
   const [userName, setUserName] = React.useState(() => {
     try { return localStorage.getItem('mb_userName') || 'Guz'; }
     catch (e) { return 'Guz'; }
   });
-  
+
   React.useEffect(() => {
     try { localStorage.setItem('mb_userName', userName); } catch (e) { /* storage unavailable */ }
   }, [userName]);
   
-  const [readingGoal, setReadingGoal] = React.useState(() => {
-    try { return localStorage.getItem('mb_readingGoal') || '0';}
+  const [amountGoal, setAmountGoal] = React.useState(() => {
+    try { return localStorage.getItem('mb_amountGoal') || '0';}
     catch (e) { return '0';}
   });
   React.useEffect(() => {
-    try {localStorage.setItem('mb_readingGoal', readingGoal); } catch (e) { TODO }
-  }, [readingGoal]);
+    try {localStorage.setItem('mb_amountGoal', amountGoal); } catch (e) { }
+  }, [amountGoal]);
 
+  const [unitGoal, setUnitGoal] = React.useState(() => {
+    try { return localStorage.getItem('mb_unitGoal')}
+    catch (e) { return ''}
+  })
+  React.useEffect(() => {
+    try {localStorage.setItem('mb_unitGoal', unitGoal); } catch (e) { }
+  }, [unitGoal]);
 
   const [selected, setSelected] = React.useState(null);
   const [origin, setOrigin] = React.useState(null);
@@ -182,7 +188,9 @@ function App() {
         }
         {tab === 'discover' && <Discover faceFont={faceFont} />}
         
-        {tab === 'profile' && <Profile faceFont={faceFont} userName={userName} setUserName={setUserName} />}
+        {tab === 'profile' && <Profile faceFont={faceFont} userName={userName} setUserName={setUserName} 
+          amountGoal={amountGoal} setAmountGoal={setAmountGoal}
+          unitGoal={unitGoal} setUnitGoal={setUnitGoal}/>}
 
         {/* cinematic reader */}
         {selected && origin &&
