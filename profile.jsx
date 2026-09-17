@@ -5,7 +5,7 @@ function Profile({ faceFont, userName, setUserName, amountGoal, setAmountGoal, u
     <div style={{ position: 'absolute', inset: 0,
       background: 'linear-gradient(180deg, #d3c7b0, #c6b99e)' }}>
 
-      <MB_Header faceFont={faceFont} title="Profile" eyebrow="Your library" />
+      <MB_Header showSearch={false} faceFont={faceFont} title="Profile" eyebrow="Your library" />
 
       <div style={{ position: 'absolute', top: 132, left: 0, right: 0, padding: '20px 20px' }}>
         <label style={{ fontFamily: faceFont, fontSize: 12, letterSpacing: 1.5,
@@ -28,17 +28,15 @@ function Profile({ faceFont, userName, setUserName, amountGoal, setAmountGoal, u
             padding: '12px 14px', fontFamily: faceFont, fontSize: 17, color: '#2e261b',
             background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(120,100,60,0.25)',
             borderRadius: 10, outline: 'none', boxSizing: 'border-box' }} />
-            <select type="number" value={unitGoal} onChange={(e) => setUnitGoal(e.target.value)}
+            <select value={unitGoal} onChange={(e) => setUnitGoal(e.target.value)}
             placeholder="Set reading goal" style={{ display: 'block', width: '35%', marginTop: 8,
             padding: '12px 14px', fontFamily: faceFont, fontSize: 17, color: '#2e261b',
             background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(120,100,60,0.25)',
             borderRadius: 10, outline: 'none', boxSizing: 'border-box' }} >
-                <option value={"book"}>Book</option>
+                <option value={"book"}>Books</option>
                 <option value={"page"}>Pages</option>
                 <option value={"hour"}>Hours</option>
                 <option value={"minute"}>Minutes</option> </select>
-            <div style={{ fontFamily: faceFont, fontSize: 13, color: '#6f6048', marginTop: 8 }}> </div>
-
         </div>
         
       </div>

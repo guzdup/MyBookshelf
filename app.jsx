@@ -66,7 +66,7 @@ function MB_TabBar({ tab, setTab, faceFont }) {
 
 }
 
-function MB_Header({ faceFont, title, eyebrow }) {
+function MB_Header({ faceFont, title, eyebrow, showSearch = true }) {
   return (
     <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30,
       padding: '58px 20px 12px',
@@ -78,16 +78,15 @@ function MB_Header({ faceFont, title, eyebrow }) {
           <div style={{ fontFamily: faceFont, fontSize: 28, fontWeight: 700, color: '#2e261b',
             lineHeight: 1.1, marginTop: 2 }}>{title}</div>
         </div>
-        <div style={{ display: 'flex', gap: 9 }}>
+        {showSearch && <div style={{ display: 'flex', gap: 9 }}>
           <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(255,255,255,0.55)',
             border: '1px solid rgba(120,100,60,0.2)', display: 'flex', alignItems: 'center',
             justifyContent: 'center', boxShadow: '0 2px 6px rgba(60,44,20,0.1)' }}>
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#6f6048" strokeWidth="2" /><path d="M16 16l4 4" stroke="#6f6048" strokeWidth="2" strokeLinecap="round" /></svg>
           </div>
-        </div>
+        </div>}
       </div>
     </div>);
-
 }
 
 function MB_Timer({ faceFont }){
@@ -124,15 +123,15 @@ function App() {
   
   const [amountGoal, setAmountGoal] = React.useState(() => {
     try { return localStorage.getItem('mb_amountGoal') || '0';}
-    catch (e) { return '0';}
+    catch (e) { return 0;}
   });
   React.useEffect(() => {
     try {localStorage.setItem('mb_amountGoal', amountGoal); } catch (e) { }
   }, [amountGoal]);
 
   const [unitGoal, setUnitGoal] = React.useState(() => {
-    try { return localStorage.getItem('mb_unitGoal')}
-    catch (e) { return ''}
+    try { return localStorage.getItem('mb_unitGoal') || 'book'; }
+    catch (e) { return 'book';}
   })
   React.useEffect(() => {
     try {localStorage.setItem('mb_unitGoal', unitGoal); } catch (e) { }
