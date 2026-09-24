@@ -122,20 +122,28 @@ function App() {
   }, [userName]);
   
   const [amountGoal, setAmountGoal] = React.useState(() => {
-    try { return localStorage.getItem('mb_amountGoal') || '0';}
-    catch (e) { return 0;}
+    try { return localStorage.getItem('mb_amountGoal') || '';}
+    catch (e) { return '';}
   });
   React.useEffect(() => {
     try {localStorage.setItem('mb_amountGoal', amountGoal); } catch (e) { }
   }, [amountGoal]);
 
   const [unitGoal, setUnitGoal] = React.useState(() => {
-    try { return localStorage.getItem('mb_unitGoal') || 'book'; }
-    catch (e) { return 'book';}
+    try { return localStorage.getItem('mb_unitGoal') || ''; }
+    catch (e) { return '';}
   })
   React.useEffect(() => {
     try {localStorage.setItem('mb_unitGoal', unitGoal); } catch (e) { }
   }, [unitGoal]);
+
+  const [spanGoal, setSpanGoal] = React.useState(() => { 
+    try { localStorage.getItem('mb_spanGoal') || ''; }
+    catch (e) {return 'day'}
+  })
+  React.useEffect(() => {
+    try {localStorage.setItem('mb_spanGoal', spanGoal); } catch (e) {}
+  }, [spanGoal])
 
   const [selected, setSelected] = React.useState(null);
   const [origin, setOrigin] = React.useState(null);
@@ -189,7 +197,7 @@ function App() {
         
         {tab === 'profile' && <Profile faceFont={faceFont} userName={userName} setUserName={setUserName} 
           amountGoal={amountGoal} setAmountGoal={setAmountGoal}
-          unitGoal={unitGoal} setUnitGoal={setUnitGoal}/>}
+          unitGoal={unitGoal} setUnitGoal={setUnitGoal} spanGoal={spanGoal} setSpanGoal={setSpanGoal}/>}
 
         {/* cinematic reader */}
         {selected && origin &&
