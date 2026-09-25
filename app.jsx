@@ -121,29 +121,32 @@ function App() {
     try { localStorage.setItem('mb_userName', userName); } catch (e) { /* storage unavailable */ }
   }, [userName]);
   
-  const [amountGoal, setAmountGoal] = React.useState(() => {
-    try { return localStorage.getItem('mb_amountGoal') || '';}
+  //<-- goalAmount -->
+  const [goalAmount, setGoalAmount] = React.useState(() => {
+    try { return localStorage.getItem('mb_goalAmount') || '';}
     catch (e) { return '';}
   });
   React.useEffect(() => {
-    try {localStorage.setItem('mb_amountGoal', amountGoal); } catch (e) { }
-  }, [amountGoal]);
+    try {localStorage.setItem('mb_goalAmount', goalAmount); } catch (e) { }
+  }, [goalAmount]);
 
-  const [unitGoal, setUnitGoal] = React.useState(() => {
-    try { return localStorage.getItem('mb_unitGoal') || ''; }
+  //<-- goalUnit -->
+  const [goalUnit, setGoalUnit] = React.useState(() => {
+    try { return localStorage.getItem('mb_goalUnit') || ''; }
     catch (e) { return '';}
   })
   React.useEffect(() => {
-    try {localStorage.setItem('mb_unitGoal', unitGoal); } catch (e) { }
-  }, [unitGoal]);
+    try {localStorage.setItem('mb_goalUnit', goalUnit); } catch (e) { }
+  }, [goalUnit]);
 
-  const [spanGoal, setSpanGoal] = React.useState(() => { 
-    try { localStorage.getItem('mb_spanGoal') || ''; }
+  //<-- goalSpan -->
+  const [goalSpan, setGoalSpan] = React.useState(() => { 
+    try { return localStorage.getItem('mb_goalSpan') || ''; }
     catch (e) {return 'day'}
   })
   React.useEffect(() => {
-    try {localStorage.setItem('mb_spanGoal', spanGoal); } catch (e) {}
-  }, [spanGoal])
+    try {localStorage.setItem('mb_goalSpan', goalSpan); } catch (e) {}
+  }, [goalSpan])
 
   const [selected, setSelected] = React.useState(null);
   const [origin, setOrigin] = React.useState(null);
@@ -196,8 +199,8 @@ function App() {
         {tab === 'discover' && <Discover faceFont={faceFont} />}
         
         {tab === 'profile' && <Profile faceFont={faceFont} userName={userName} setUserName={setUserName} 
-          amountGoal={amountGoal} setAmountGoal={setAmountGoal}
-          unitGoal={unitGoal} setUnitGoal={setUnitGoal} spanGoal={spanGoal} setSpanGoal={setSpanGoal}/>}
+          goalAmount={goalAmount} setGoalAmount={setGoalAmount}
+          goalUnit={goalUnit} setGoalUnit={setGoalUnit} goalSpan={goalSpan} setGoalSpan={setGoalSpan} />}
 
         {/* cinematic reader */}
         {selected && origin &&
