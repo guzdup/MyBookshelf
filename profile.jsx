@@ -5,7 +5,27 @@ function FontSizeSelector(){
 }
 
 
-function Profile({ faceFont, userName, setUserName, goalAmount, setGoalAmount, goalUnit, setGoalUnit, goalSpan, setGoalSpan }) {
+// accept only whole numbers in [1, max]; an empty field clears the goal
+function MB_goalChange(e, max, setGoal) {
+  const v = e.target.value;
+  if (v === '') {
+    if (!e.target.validity.badInput) setGoal(null); // badInput: browser holds text like "-" or "e"
+    return;
+  }
+  if (!/^\d+$/.test(v)) return;
+  const n = parseInt(v, 10);
+  if (n >= 1 && n <= max) setGoal(n);
+}
+
+function Profile({ faceFont, userName, setUserName, dailyGoalMinutes, setDailyGoalMinutes, yearlyGoalBooks, setYearlyGoalBooks }) {
+  const labelStyle = { fontFamily: faceFont, fontSize: 12, letterSpacing: 1.5,
+    textTransform: 'uppercase', color: '#6f6048', fontWeight: 600 };
+  const inputStyle = { display: 'block', marginTop: 8, padding: '12px 14px',
+    fontFamily: faceFont, fontSize: 17, color: '#2e261b',
+    background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(120,100,60,0.25)',
+    borderRadius: 10, outline: 'none', boxSizing: 'border-box' };
+  const unitStyle = { fontFamily: faceFont, fontSize: 15, color: '#6f6048', marginTop: 8 };
+
   return (
     <div style={{ position: 'absolute', inset: 0,
       background: 'linear-gradient(180deg, #d3c7b0, #c6b99e)' }}>
@@ -25,37 +45,23 @@ function Profile({ faceFont, userName, setUserName, goalAmount, setGoalAmount, g
           This name will show on My Shelf.
         </div>
         
-        <label style={{ fontFamily: faceFont, display: "block", fontSize: 12, letterSpacing: 1.5,
-            textTransform: 'uppercase', marginTop: 20, color: '#6f6048', fontWeight: 600 }}>Reading Goal</label>
-        <div style={{display: 'flex', gap: '10px', width: '100%'}}>
-            <input type="number" value={goalAmount} onChange={(e) => setGoalAmount(e.target.value)}
-                placeholder="-" min={0} style={{ display: 'block', width: '25%', marginTop: 8,
-                padding: '12px 14px', fontFamily: faceFont, fontSize: 17, color: '#2e261b',
-                background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(120,100,60,0.25)',
-                borderRadius: 10, outline: 'none', boxSizing: 'border-box' }} />
-            <select value={goalUnit} onChange={(e) => setGoalUnit(e.target.value)}
-                placeholder="Select unit"  style={{ display: 'block', width: '40%', marginTop: 8,
-                padding: '12px 14px', fontFamily: faceFont, fontSize: 17, color: '#2e261b',
-                background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(120,100,60,0.25)',
-                borderRadius: 10, outline: 'none', boxSizing: 'border-box' }} >
-                <option value={""}></option>
-                <option value={"book"}>Books</option>
-                <option value={"page"}>Pages</option>
-                <option value={"hour"}>Hours</option>
-                <option value={"minute"}>Minutes</option> 
-            </select>
-            <select value={goalSpan} onChange={(e) => setGoalSpan(e.target.value)}
-            placeholder="Select time span" style={{ display: 'block', width: '40%', marginTop: 8,
-            padding: '12px 14px', fontFamily: faceFont, fontSize: 17, color: '#2e261b',
-            background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(120,100,60,0.25)',
-            borderRadius: 10, outline: 'none', boxSizing: 'border-box' }} >
-                <option value={""}></option>
-                <option value={"day"}>Day</option>
-                <option value={"month"}>Month</option>
-                <option value={"year"}>Year</option>
-            </select>
+        <label style={{ ...labelStyle, display: 'block', marginTop: 20 }}>Daily goal</label>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <input type="number" inputMode="numeric" min={1} max={1440} step={1}
+                value={dailyGoalMinutes ?? ''} onChange={(e) => MB_goalChange(e, 1440, setDailyGoalMinutes)}
+                placeholder="-" style={{ ...inputStyle, width: '30%' }} />
+            <span style={unitStyle}>min / day</span>
         </div>
-        <button onClick={() => {setGoalAmount(''); setGoalUnit(''); setGoalSpan('');}}
+
+        <label style={{ ...labelStyle, display: 'block', marginTop: 20 }}>Yearly goal</label>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <input type="number" inputMode="numeric" min={1} step={1}
+                value={yearlyGoalBooks ?? ''} onChange={(e) => MB_goalChange(e, Infinity, setYearlyGoalBooks)}
+                placeholder="-" style={{ ...inputStyle, width: '30%' }} />
+            <span style={unitStyle}>books / year</span>
+        </div>
+
+        <button onClick={() => { setDailyGoalMinutes(null); setYearlyGoalBooks(null); }}
             style={{ display: 'flex', justifyContent: 'center', margin: '8px auto 0px auto', alignItems: 'center' , height: 20, width: '25%', padding: '12px 14px', 
                 fontFamily: faceFont, fontSize: 17, color: 'rgba(255,255,255,0.55)',
                 background: '#2e261b', border: '1px solid rgba(120,100,60,0.25)',

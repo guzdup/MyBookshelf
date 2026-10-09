@@ -96,6 +96,22 @@ function MB_Timer({ faceFont }){
   )
 }
 
+// localStorage helpers for integer values; null is stored as "no key"
+function MB_loadInt(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    const n = raw === null ? NaN : parseInt(raw, 10);
+    return Number.isInteger(n) ? n : fallback;
+  } catch (e) { return fallback; }
+}
+
+function MB_saveInt(key, value) {
+  try {
+    if (value === null) localStorage.removeItem(key);
+    else localStorage.setItem(key, String(value));
+  } catch (e) { /* storage unavailable */ }
+}
+
 function MB_Placeholder({ title, line, faceFont }) {
   return (
     <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
@@ -121,32 +137,22 @@ function App() {
     try { localStorage.setItem('mb_userName', userName); } catch (e) { /* storage unavailable */ }
   }, [userName]);
   
-  //<-- goalAmount -->
-  const [goalAmount, setGoalAmount] = React.useState(() => {
-    try { return localStorage.getItem('mb_goalAmount') || '';}
-    catch (e) { return '';}
-  });
-  React.useEffect(() => {
-    try {localStorage.setItem('mb_goalAmount', goalAmount); } catch (e) { }
-  }, [goalAmount]);
+  // reading goals: null = no goal set. Daily goal is always stored in minutes.
+  const [dailyGoalMinutes, setDailyGoalMinutes] = React.useState(() => MB_loadInt('mb_dailyGoalMinutes', null));
+  React.useEffect(() => { MB_saveInt('mb_dailyGoalMinutes', dailyGoalMinutes); }, [dailyGoalMinutes]);
 
-  //<-- goalUnit -->
-  const [goalUnit, setGoalUnit] = React.useState(() => {
-    try { return localStorage.getItem('mb_goalUnit') || ''; }
-    catch (e) { return '';}
-  })
-  React.useEffect(() => {
-    try {localStorage.setItem('mb_goalUnit', goalUnit); } catch (e) { }
-  }, [goalUnit]);
+  const [yearlyGoalBooks, setYearlyGoalBooks] = React.useState(() => MB_loadInt('mb_yearlyGoalBooks', null));
+  React.useEffect(() => { MB_saveInt('mb_yearlyGoalBooks', yearlyGoalBooks); }, [yearlyGoalBooks]);
 
-  //<-- goalSpan -->
-  const [goalSpan, setGoalSpan] = React.useState(() => { 
-    try { return localStorage.getItem('mb_goalSpan') || ''; }
-    catch (e) {return 'day'}
-  })
+  // not editable yet — will grow when a book is marked finished
+  const [booksFinished, setBooksFinished] = React.useState(() => MB_loadInt('mb_booksFinished', 0));
+  React.useEffect(() => { MB_saveInt('mb_booksFinished', booksFinished); }, [booksFinished]);
+
+  // drop keys from the old amount/unit/span goal
   React.useEffect(() => {
-    try {localStorage.setItem('mb_goalSpan', goalSpan); } catch (e) {}
-  }, [goalSpan])
+    try { ['mb_goalAmount', 'mb_goalUnit', 'mb_goalSpan'].forEach((k) => localStorage.removeItem(k)); }
+    catch (e) { /* storage unavailable */ }
+  }, []);
 
   const [selected, setSelected] = React.useState(null);
   const [origin, setOrigin] = React.useState(null);
@@ -198,9 +204,9 @@ function App() {
         }
         {tab === 'discover' && <Discover faceFont={faceFont} />}
         
-        {tab === 'profile' && <Profile faceFont={faceFont} userName={userName} setUserName={setUserName} 
-          goalAmount={goalAmount} setGoalAmount={setGoalAmount}
-          goalUnit={goalUnit} setGoalUnit={setGoalUnit} goalSpan={goalSpan} setGoalSpan={setGoalSpan} />}
+        {tab === 'profile' && <Profile faceFont={faceFont} userName={userName} setUserName={setUserName}
+          dailyGoalMinutes={dailyGoalMinutes} setDailyGoalMinutes={setDailyGoalMinutes}
+          yearlyGoalBooks={yearlyGoalBooks} setYearlyGoalBooks={setYearlyGoalBooks} />}
 
         {/* cinematic reader */}
         {selected && origin &&
