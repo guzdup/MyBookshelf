@@ -25,6 +25,11 @@ function Profile({ faceFont, userName, setUserName, dailyGoalMinutes, setDailyGo
     background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(120,100,60,0.25)',
     borderRadius: 10, outline: 'none', boxSizing: 'border-box' };
   const unitStyle = { fontFamily: faceFont, fontSize: 15, color: '#6f6048', marginTop: 8 };
+  // marginLeft auto pushes it to the row's right edge, lining up with the name field
+  const clearStyle = { marginLeft: 'auto', marginTop: 8, height: 36, padding: '0 16px', flexShrink: 0,
+    fontFamily: faceFont, fontSize: 17, color: 'rgba(255,255,255,0.55)',
+    background: '#2e261b', border: '1px solid rgba(120,100,60,0.25)',
+    borderRadius: 10, outline: 'none', boxSizing: 'border-box', cursor: 'pointer' };
 
   return (
     <div style={{ position: 'absolute', inset: 0,
@@ -51,6 +56,7 @@ function Profile({ faceFont, userName, setUserName, dailyGoalMinutes, setDailyGo
                 value={dailyGoalMinutes ?? ''} onChange={(e) => MB_goalChange(e, 1440, setDailyGoalMinutes)}
                 placeholder="-" style={{ ...inputStyle, width: '30%' }} />
             <span style={unitStyle}>min / day</span>
+            <button onClick={() => setDailyGoalMinutes(null)} style={clearStyle}>Clear</button>
         </div>
 
         <label style={{ ...labelStyle, display: 'block', marginTop: 20 }}>Yearly goal</label>
@@ -59,17 +65,8 @@ function Profile({ faceFont, userName, setUserName, dailyGoalMinutes, setDailyGo
                 value={yearlyGoalBooks ?? ''} onChange={(e) => MB_goalChange(e, Infinity, setYearlyGoalBooks)}
                 placeholder="-" style={{ ...inputStyle, width: '30%' }} />
             <span style={unitStyle}>books / year</span>
+            <button onClick={() => setYearlyGoalBooks(null)} style={clearStyle}>Clear</button>
         </div>
-
-        <button onClick={() => { setDailyGoalMinutes(null); setYearlyGoalBooks(null); }}
-            style={{ display: 'flex', justifyContent: 'center', margin: '8px auto 0px auto', alignItems: 'center' , height: 20, width: '25%', padding: '12px 14px', 
-                fontFamily: faceFont, fontSize: 17, color: 'rgba(255,255,255,0.55)',
-                background: '#2e261b', border: '1px solid rgba(120,100,60,0.25)',
-                borderRadius: 10, outline: 'none', boxSizing: 'border-box' }}>
-            Clear 
-        </button>
-        
-        
       </div>
 
       <MB_Timer faceFont={faceFont}/>
