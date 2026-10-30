@@ -37,7 +37,7 @@ function Profile({ faceFont, userName, setUserName, dailyGoalMinutes, setDailyGo
 
       <MB_Header showSearch={false} faceFont={faceFont} title="Profile" fontSize={'28px'} />
 
-      <div style={{ position: 'absolute', top: 132, left: 0, right: 0, padding: '20px 20px' }}>
+      <div style={{ position: 'absolute', top: 132, left: 0, right: 0, padding: '4px 20px 20px' }}>
         
         <label style={{ fontFamily: faceFont, fontSize: 12, letterSpacing: 1.5,
             textTransform: 'uppercase', color: '#6f6048', fontWeight: 600 }}>Your name</label>

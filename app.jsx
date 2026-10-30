@@ -66,7 +66,7 @@ function MB_TabBar({ tab, setTab, faceFont }) {
 
 }
 
-function MB_Header({ faceFont, title, eyebrow, showSearch = true }) {
+function MB_Header({ faceFont, fontSize = 28, title, eyebrow, showSearch = true }) {
   return (
     <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30,
       padding: '58px 20px 12px',
@@ -74,8 +74,8 @@ function MB_Header({ faceFont, title, eyebrow, showSearch = true }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
         <div>
           <div style={{ fontFamily: faceFont, fontSize: 13, letterSpacing: 1, color: '#6f6048',
-            textTransform: 'uppercase', fontWeight: 600 }}>{eyebrow}</div>
-          <div style={{ fontFamily: faceFont, fontSize: 28, fontWeight: 700, color: '#2e261b',
+            textTransform: 'uppercase', fontWeight: 600 }}>{eyebrow || '\u00a0'}</div>{/* nbsp keeps the line's height so titles align across tabs */}
+          <div style={{ fontFamily: faceFont, fontSize: fontSize, fontWeight: 700, color: '#2e261b',
             lineHeight: 1.1, marginTop: 2 }}>{title}</div>
         </div>
         {showSearch && <div style={{ display: 'flex', gap: 9 }}>
@@ -217,7 +217,7 @@ function App() {
       </div>
 
       {tab !== 'profile' &&
-        <MB_Header faceFont={faceFont}
+        <MB_Header faceFont={faceFont} fontSize={'28px'}
           title={tab === 'discover' ? 'Discover' : 'My Shelf'}
           eyebrow={tab === 'discover' ? 'Curated for you' : `Good evening, ${userName}`} />
       }
